@@ -18,11 +18,14 @@
 
 
 using System;
+using System.CodeDom;
 using System.Diagnostics;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows.Forms;
 
 using KeePass.Plugins;
 using KeePass.UI;
+using KeePass.Util;
 
 using KeePassLib;
 using KeePassLib.Cryptography;
@@ -46,6 +49,7 @@ namespace KeePassDiceware
 		private Options _options;
 
 		private static string OptionsKey { get; } = typeof(Options).FullName;
+		private const int MAX_ATTEMPTS = 1000;
 
 		public DicewarePwGenerator(IPluginHost host)
 		{
@@ -63,9 +67,19 @@ namespace KeePassDiceware
 
 			LoadPluginOptions(profile.CustomAlgorithmOptions);
 
-			string result = Diceware.Generate(_options, profile, random);
+			string result;
+			int quality;
+			int attempts = 0;
+			do
+			{
+				result = Diceware.Generate(_options, profile, random);
+				quality = (int) QualityEstimation.EstimatePasswordBits(result.ToCharArray());
+				attempts++;
+			}
+			while (quality < _options.MinQuality && attempts <= MAX_ATTEMPTS);
 
-			return new ProtectedString(false, result);
+			if (quality >= _options.MinQuality) return new ProtectedString(false, result);
+			return ProtectedString.Empty;
 		}
 
 		private void LoadPluginOptions(string optionalSerializedOptions)

@@ -37,6 +37,7 @@ namespace KeePassDiceware
 		public List<SaltSource> SaltSources { get; set; } = new();
 		public List<WordList> WordLists { get; set; } = new();
 		public AdvancedStrategy AdvancedStrategy { get; set; } = AdvancedStrategy.Drop;
+		public int MinQuality { get; set; } = 90;
 
 		public Options() { }
 

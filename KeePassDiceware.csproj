@@ -45,10 +45,10 @@
     <None Remove="KeePass.props" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="KeePass">
+      <HintPath>..\..\..\..\..\..\Program Files\KeePass Password Safe 2\KeePass.exe</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy /Y &quot;$(OutDir)$(ProjectName).*&quot; &quot;$(KeePassPluginsPath)&quot;" />
-  </Target>
 </Project>

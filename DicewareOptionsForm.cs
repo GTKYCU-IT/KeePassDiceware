@@ -79,6 +79,7 @@ namespace KeePassDiceware
 			wordSeparatorPromptedTextBox.Text = Options.WordSeparator;
 			wordCasingComboBox.SelectedIndex = wordCasingComboBox.FindStringExact(Options.WordCasing.GetDescription());
 			advancedStrategyComboBox.SelectedIndex = advancedStrategyComboBox.FindStringExact(Options.AdvancedStrategy.GetDescription());
+			minQualityNumericUpDown.Value = Options.MinQuality;
 			l33tSpeakComboBox.SelectedIndex = l33tSpeakComboBox.FindStringExact(Options.L33tSpeak.GetDescription());
 			saltComboBox.SelectedIndex = saltComboBox.FindStringExact(Options.Salt.GetDescription());
 			_saltSources = new(Options.SaltSources);
@@ -127,6 +128,7 @@ namespace KeePassDiceware
 				WordCasing = EnumTools.FromDescription<WordCasingType>(wordCasingComboBox.SelectedItem.ToString()),
 				L33tSpeak = EnumTools.FromDescription<L33tSpeakType>(l33tSpeakComboBox.SelectedItem.ToString()),
 				AdvancedStrategy = EnumTools.FromDescription<AdvancedStrategy>(advancedStrategyComboBox.SelectedItem.ToString()),
+				MinQuality = (int)minQualityNumericUpDown.Value,
 				Salt = EnumTools.FromDescription<SaltType>(saltComboBox.SelectedItem.ToString()),
 				SaltSources = new(_saltSources),
 				WordLists = new(_wordLists)
